@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0b10">
+    <title>COLLIDE — Make something happen.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="topbar">
+        <a class="brand" href="/">
+            <span class="brand-symbol">C.</span>
+            <span>COLLIDE<span class="brand-dot">.</span></span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#signals">Signals</a>
+            <a href="#matches">People</a>
+            <a href="#projects">Projects</a>
+            <a href="#events">Events</a>
+        </nav>
+
+        <div class="topbar-right">
+            <span class="live-indicator">COMMUNITY ENGINE ONLINE</span>
+            <button class="avatar" id="currentAvatar">A</button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow"><span></span> A DIFFERENT KIND OF COMMUNITY PLATFORM</div>
+                <h1>Good things<br>happen when<br><span>people collide.</span></h1>
+                <p>Find your people. Exchange skills. Turn unfinished ideas into something real.</p>
+
+                <div class="hero-actions">
+                    <button class="primary-btn" onclick="scrollToSection('signals')">
+                        Explore the signals <span>↗</span>
+                    </button>
+                    <button class="text-btn" onclick="openModal('signalModal')">
+                        Post a signal <span>＋</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-art">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit orbit-three"></div>
+                <div class="orbit-core">C<span>.</span></div>
+                <div class="orbit-node node-one">AI</div>
+                <div class="orbit-node node-two">DESIGN</div>
+                <div class="orbit-node node-three">BUILD</div>
+                <div class="orbit-node node-four">IDEAS</div>
+                <div class="orbit-node node-five">PEOPLE</div>
+                <div class="orbit-caption">INDEPENDENT MINDS.<br>SHARED MOMENTUM.</div>
+            </div>
+        </section>
+
+        <!-- QUICK STATS -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span>MEMBERS</span>
+                <strong id="memberCount">—</strong>
+                <small>People in the network</small>
+            </div>
+            <div class="stat-card">
+                <span>OPEN SIGNALS</span>
+                <strong id="signalCount">—</strong>
+                <small>Needs, offers and ideas</small>
+            </div>
+            <div class="stat-card">
+                <span>COLLABORATIONS</span>
+                <strong id="collabCount">—</strong>
+                <small>Projects in motion</small>
+            </div>
+            <div class="stat-card">
+                <span>PROJECT UPDATES</span>
+                <strong id="updateCount">—</strong>
+                <small>Progress shared</small>
+            </div>
+        </section>
+
+        <!-- COMMUNITY INTELLIGENCE DASHBOARD -->
+        <section class="section community-dashboard" id="dashboard">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">THE BIGGER PICTURE</div>
+                    <h2>Community intelligence<span>.</span></h2>
+                    <p>Understand what's happening beneath the surface.</p>
+                </div>
+                <button class="outline-btn dashboard-refresh" id="refreshDashboard">
+                    ↻ Refresh data
+                </button>
+            </div>
+
+            <!-- HEALTH SCORE -->
+            <div class="dashboard-health">
+                <div class="health-main">
+                    <div class="eyebrow">COMMUNITY HEALTH INDICATOR</div>
+                    <div class="health-score-line">
+                        <strong id="healthScore">—</strong>
+                        <span>/ 100</span>
+                    </div>
+                    <p id="healthDescription">Waiting for community data...</p>
+                    <div class="health-meter">
+                        <div class="health-meter-fill" id="healthMeterFill"></div>
+                    </div>
+                    <small>Prototype indicator based on activity, attendance, collaboration and task completion.</small>
+                </div>
+
+                <div class="health-breakdown">
+                    <div class="health-breakdown-item">
+                        <span>MEMBER ACTIVITY</span>
+                        <strong id="healthActiveMembers">—</strong>
+                        <small>Active in the last 30 days</small>
+                    </div>
+                    <div class="health-breakdown-item">
+                        <span>EVENT ATTENDANCE</span>
+                        <strong id="healthAttendance">—</strong>
+                        <small>Attendance rate</small>
+                    </div>
+                    <div class="health-breakdown-item">
+                        <span>PROJECT MOMENTUM</span>
+                        <strong id="healthProjects">—</strong>
+                        <small>Multi-member projects</small>
+                    </div>
+                    <div class="health-breakdown-item">
+                        <span>TASK COMPLETION</span>
+                        <strong id="healthTasks">—</strong>
+                        <small>Tasks completed</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMMUNITY METRICS -->
+            <div class="dashboard-subheading">
+                <div>
+                    <div class="eyebrow">PEOPLE & PARTICIPATION</div>
+                    <h3>Community pulse</h3>
+                </div>
+                <span class="dashboard-period">LAST 30 DAYS</span>
+            </div>
+
+            <div class="dashboard-metrics">
+                <div class="dashboard-metric">
+                    <span>TOTAL MEMBERS</span>
+                    <strong id="dashTotalMembers">—</strong>
+                    <small>People in COLLIDE</small>
+                </div>
+                <div class="dashboard-metric">
+                    <span>ACTIVE MEMBERS</span>
+                    <strong id="dashActiveMembers">—</strong>
+                    <small>Participated recently</small>
+                </div>
+                <div class="dashboard-metric">
+                    <span>RETURNING MEMBERS</span>
+                    <strong id="dashReturningMembers">—</strong>
+                    <small>Active in both 30-day periods</small>
+                </div>
+                <div class="dashboard-metric">
+                    <span>INACTIVE MEMBERS</span>
+                    <strong id="dashInactiveMembers">—</strong>
+                    <small>No recorded recent activity</small>
+                </div>
+            </div>
+
+            <!-- ENGAGEMENT & COLLABORATION -->
+            <div class="dashboard-two-column">
+                <div class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <div class="eyebrow">CONNECTIONS</div>
+                            <h3>People connecting</h3>
+                        </div>
+                        <span class="dashboard-icon">↗</span>
+                    </div>
+
+                    <div class="dashboard-panel-stats">
+                        <div>
+                            <strong id="dashAcceptedConnections">—</strong>
+                            <span>Accepted connections</span>
+                        </div>
+                        <div>
+                            <strong id="dashPendingConnections">—</strong>
+                            <span>Pending requests</span>
+                        </div>
+                        <div>
+                            <strong id="dashMemberships">—</strong>
+                            <span>Project memberships</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <div class="eyebrow">COLLABORATION</div>
+                            <h3>Ideas becoming real</h3>
+                        </div>
+                        <span class="dashboard-icon">✳</span>
+                    </div>
+
+                    <div class="dashboard-panel-stats">
+                        <div>
+                            <strong id="dashActiveProjects">—</strong>
+                            <span>Active projects</span>
+                        </div>
+                        <div>
+                            <strong id="dashCompletedProjects">—</strong>
+                            <span>Completed projects</span>
+                        </div>
+                        <div>
+                            <strong id="dashProjectUpdates">—</strong>
+                            <span>Project updates</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENTS & TASKS -->
+            <div class="dashboard-two-column">
+                <div class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <div class="eyebrow">EXPERIENCES</div>
+                            <h3>Events & attendance</h3>
+                        </div>
+                        <span class="dashboard-icon">◎</span>
+                    </div>
+
+                    <div class="dashboard-panel-stats">
+                        <div>
+                            <strong id="dashTotalEvents">—</strong>
+                            <span>Total events</span>
+                        </div>
+                        <div>
+                            <strong id="dashRegistrations">—</strong>
+                            <span>Registrations</span>
+                        </div>
+                        <div>
+                            <strong id="dashAttended">—</strong>
+                            <span>Attended</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-progress-block">
+                        <div class="dashboard-progress-label">
+                            <span>Attendance rate</span>
+                            <strong id="dashAttendanceRate">—</strong>
+                        </div>
+                        <div class="dashboard-progress">
+                            <div id="dashAttendanceBar"></div>
+                        </div>
+                        <small id="dashEventRating">Average event rating: —</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <div class="eyebrow">EXECUTION</div>
+                            <h3>Tasks & progress</h3>
+                        </div>
+                        <span class="dashboard-icon">✓</span>
+                    </div>
+
+                    <div class="dashboard-panel-stats">
+                        <div>
+                            <strong id="dashTotalTasks">—</strong>
+                            <span>Total tasks</span>
+                        </div>
+                        <div>
+                            <strong id="dashCompletedTasks">—</strong>
+                            <span>Completed</span>
+                        </div>
+                        <div>
+                            <strong id="dashPendingTasks">—</strong>
+                            <span>Pending</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-progress-block">
+                        <div class="dashboard-progress-label">
+                            <span>Task completion</span>
+                            <strong id="dashTaskRate">—</strong>
+                        </div>
+                        <div class="dashboard-progress">
+                            <div id="dashTaskBar"></div>
+                        </div>
+                        <small id="dashInProgressTasks">In progress: —</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENT ACTIVITY -->
+            <div class="dashboard-panel activity-panel">
+                <div class="dashboard-panel-heading">
+                    <div>
+                        <div class="eyebrow">WHAT'S MOVING</div>
+                        <h3>Recent community activity</h3>
+                    </div>
+                    <span class="dashboard-period">LATEST 8 ACTIONS</span>
+                </div>
+
+                <div id="dashboardActivity" class="dashboard-activity">
+                    <div class="loading">Loading community activity...</div>
+                </div>
+            </div>
+
+            <p class="dashboard-disclaimer">
+                Community metrics reflect recorded activity in this prototype.
+                The health indicator is an experimental scoring model, not a
+                validated assessment of community wellbeing.
+            </p>
+        </section>
+
+        <!-- SIGNALS -->
+        <section class="section" id="signals">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">THE COMMUNITY PULSE</div>
+                    <h2>The signal board<span>.</span></h2>
+                    <p>Someone here might be exactly who you need.</p>
+                </div>
+                <button class="outline-btn" onclick="openModal('signalModal')">＋ Post a signal</button>
+            </div>
+
+            <div class="filter-row">
+                <button class="filter active" data-filter="all">All signals</button>
+                <button class="filter" data-filter="need">Looking for</button>
+                <button class="filter" data-filter="offer">Offering</button>
+                <button class="filter" data-filter="building">Building</button>
+            </div>
+
+            <div class="signal-grid" id="signalGrid">
+                <div class="loading">Loading signals...</div>
+            </div>
+        </section>
+
+        <!-- MATCHES -->
+        <section class="section" id="matches">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">SERENDIPITY, WITH A LITTLE SCIENCE</div>
+                    <h2>Your next connection<span>.</span></h2>
+                    <p>Discover people whose skills and interests complement yours.</p>
+                </div>
+            </div>
+
+            <div class="member-selector">
+                <label for="memberSelect">EXPLORE AS</label>
+                <select id="memberSelect"></select>
+                <button class="primary-btn small-btn" onclick="loadMatches()">Find my people ↗</button>
+            </div>
+
+            <div class="match-grid" id="matchGrid">
+                <div class="loading">Finding potential connections...</div>
+            </div>
+        </section>
+
+        <!-- CONNECTION REQUESTS -->
+        <section class="section" id="requests">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">MAKE THE FIRST MOVE</div>
+                    <h2>Connection inbox<span>.</span></h2>
+                    <p>Requests, responses and opportunities to collaborate.</p>
+                </div>
+                <button class="outline-btn" onclick="loadRequests()">↻ Refresh inbox</button>
+            </div>
+
+            <div class="request-grid" id="requestGrid">
+                <div class="loading">Loading requests...</div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="section" id="projects">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">FROM TALK TO ACTION</div>
+                    <h2>Things in motion<span>.</span></h2>
+                    <p>Small beginnings. Real progress. Shared ownership.</p>
+                </div>
+                <button class="outline-btn" onclick="openModal('projectModal')">＋ Start a project</button>
+            </div>
+
+            <div class="project-grid" id="projectGrid">
+                <div class="loading">Loading projects...</div>
+            </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section class="section" id="events">
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">MEET. EXPERIENCE. CONNECT.</div>
+                    <h2>Things happening<span>.</span></h2>
+                    <p>Turn shared interests into real-world experiences.</p>
+                </div>
+                <button class="outline-btn" onclick="openModal('eventModal')">＋ Create an event</button>
+            </div>
+
+            <div class="event-intro">
+                <div>
+                    <span class="event-intro-label">BEYOND THE SCREEN</span>
+                    <h3>Communities grow<br>when people show up.</h3>
+                </div>
+                <p>Discover meetups, workshops and experiences. Register, attend and keep the connections going.</p>
+            </div>
+
+            <div class="event-filter-row">
+                <button class="filter active" data-event-filter="all">All events</button>
+                <button class="filter" data-event-filter="upcoming">Upcoming</button>
+                <button class="filter" data-event-filter="completed">Completed</button>
+            </div>
+
+            <div class="event-grid" id="eventGrid">
+                <div class="loading">Loading events...</div>
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section class="closing">
+            <div class="closing-orb">✳</div>
+            <div class="eyebrow">YOUR NEXT MOVE</div>
+            <h2>Don't wait for<br>the perfect moment<span>.</span></h2>
+            <p>Find one person. Share one idea. Start one thing.</p>
+            <button class="primary-btn" onclick="openModal('signalModal')">Put something out there ↗</button>
+        </section>
+
+        <footer>
+            <a class="brand" href="/">
+                <span class="brand-symbol">C.</span> COLLIDE.
+            </a>
+            <span>BUILT FOR PEOPLE WHO MAKE THINGS HAPPEN.</span>
+            <span>INDEPENDENT PROTOTYPE · 2026</span>
+        </footer>
+    </main>
+
+    <!-- SIGNAL MODAL -->
+    <div class="modal" id="signalModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('signalModal')">×</button>
+            <div class="eyebrow">PUT YOURSELF OUT THERE</div>
+            <h2>Post a signal<span>.</span></h2>
+
+            <form id="signalForm">
+                <label>WHO ARE YOU?</label>
+                <select name="member_id" class="form-control member-options" required></select>
+
+                <label>WHAT KIND OF SIGNAL?</label>
+                <select name="signal_type" class="form-control" required>
+                    <option value="need">I need something</option>
+                    <option value="offer">I can offer something</option>
+                    <option value="building">I'm building something</option>
+                </select>
+
+                <label>GIVE IT A TITLE</label>
+                <input name="title" class="form-control" maxlength="100" placeholder="e.g. Looking for a co-founder" required>
+
+                <label>EXPLAIN A LITTLE</label>
+                <textarea name="description" class="form-control" maxlength="1000" placeholder="What are you looking for or offering?" required></textarea>
+
+                <label>CATEGORY</label>
+                <input name="category" class="form-control" placeholder="e.g. AI, Design, Content">
+
+                <button class="primary-btn full-btn" type="submit">Publish signal ↗</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PROJECT MODAL -->
+    <div class="modal" id="projectModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('projectModal')">×</button>
+            <div class="eyebrow">MAKE IT REAL</div>
+            <h2>Start something<span>.</span></h2>
+
+            <form id="projectForm">
+                <label>PROJECT OWNER</label>
+                <select name="owner_id" class="form-control member-options" required></select>
+
+                <label>PROJECT NAME</label>
+                <input name="title" class="form-control" maxlength="100" placeholder="Give your idea a name" required>
+
+                <label>WHAT IS IT ABOUT?</label>
+                <textarea name="description" class="form-control" maxlength="1000" placeholder="Describe what you want to create..." required></textarea>
+
+                <label>WHAT DOES SUCCESS LOOK LIKE?</label>
+                <input name="goal" class="form-control" maxlength="300" placeholder="The outcome you're working towards">
+
+                <label>TARGET DATE</label>
+                <input name="deadline" type="date" class="form-control">
+
+                <button class="primary-btn full-btn" type="submit">Create collaboration ↗</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CREATE EVENT MODAL -->
+    <div class="modal" id="eventModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('eventModal')">×</button>
+            <div class="eyebrow">BRING PEOPLE TOGETHER</div>
+            <h2>Create an experience<span>.</span></h2>
+
+            <form id="eventForm">
+                <label>EVENT ORGANISER</label>
+                <select name="created_by" class="form-control member-options" required></select>
+
+                <label>EVENT NAME</label>
+                <input name="title" class="form-control" maxlength="120" placeholder="e.g. Bengaluru Build & Connect" required>
+
+                <label>WHAT WILL HAPPEN?</label>
+                <textarea name="description" class="form-control" maxlength="1000" placeholder="Tell people what they can expect..." required></textarea>
+
+                <label>CATEGORY</label>
+                <select name="category" class="form-control" required>
+                    <option value="Meetup">Meetup</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Learning">Learning session</option>
+                    <option value="Outdoor">Outdoor experience</option>
+                    <option value="Networking">Community gathering</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>DATE</label>
+                <input name="event_date" type="date" class="form-control" required>
+
+                <label>TIME</label>
+                <input name="event_time" type="time" class="form-control" required>
+
+                <label>VENUE</label>
+                <input name="venue" class="form-control" maxlength="200" placeholder="Location or meeting point" required>
+
+                <label>CAPACITY <span class="form-hint">(0 = unlimited)</span></label>
+                <input name="capacity" type="number" class="form-control" min="0" value="20" required>
+
+                <button class="primary-btn full-btn" type="submit">Publish event ↗</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EVENT DETAILS MODAL -->
+    <div class="modal" id="eventDetailsModal">
+        <div class="modal-card event-details-card">
+            <button class="modal-close" onclick="closeModal('eventDetailsModal')">×</button>
+            <div id="eventDetailsContent">
+                <div class="loading">Loading event...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='events.js') }}"></script>
+</body>
+</html>
